@@ -1,0 +1,47 @@
+.showTitle {
+    padding:0 12px;
+    height: 40px;
+    background-color: RGB(16,83,189);
+    margin-top: 21px;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  
+  .topPan {
+    border-bottom: 1px solid RGB(16,83,189);
+    box-sizing: content-box;
+    margin-bottom: 20px;
+    display: flex;
+    height: 60px;
+    justify-content: space-between;
+  }
+
+  .titleRight {
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+  }
+
+  .setting {
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .startSession {
+    font-weight: 600;
+    border: 1px solid RGB(16,83,189);
+    border-radius: 4px;
+    width: 60%;
+    height: 70%;
+    font-size: 18px;
+    line-height: 36px;
+    color: RGB(16,83,189);
+    cursor: pointer;
+  }

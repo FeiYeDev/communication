@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>测试web屏幕分享</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/@bootcss/v3.bootcss.com@1.0.17/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style type="text/css">
+    html,
+    body {
+      height: 100%;
+      background-color: #fff;
+    }
+
+    .container {
+      height: 100%;
+      border: 1px solid #ddd;
+      padding: 20px;
+    }
+
+    .pre-start-view {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .living-view {
+      display: none;
+    }
+
+    .video-container {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+    }
+
+    #j_video {
+      width: 800px;
+      height: 500px;
+    }
+
+    .video-btns {
+      margin-top: 16px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="pre-start-view">
+      <button type="button" class="btn btn-primary" id="j_start">Start</button>
+    </div>
+    <div class="living-view">
+      <div class="video-container">
+        <video autoplay playsinline id="j_video"></video>
+      </div>
+      <p class="video-btns">
+        <button type="button" class="btn btn-primary" id="j_record">Record</button>
+      </p>
+    </div>
+  </div>
+</body>
+<script>
+
+  const videoplay = document.querySelector("#j_video")
+  let videoBuffer = []
+  let mediaRecorder
+  let recording = false
+
+  async function getMediaStream(stream) {
+    console.log(stream);
+    stream[0].getTracks().forEach(track => {
+      track.onended = stopRecording;
+    });
+    stream[1].getAudioTracks().forEach(track=>{
+        stream[0].addTrack(track);
+    });
+
+    setCaptureStream(stream);
+
+    videoplay.srcObject = stream
+    window.$stream = stream
+  }
+
+  function handleError() {
+    console.error('getUserMedia error : ', err)
+  }
+
+  async function startCapture(displayMediaOptions) {
+    let captureStream = null;
+    let audioStream = null;
+    try {
+      captureStream = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+      audioStream = await navigator.mediaDevices.getUserMedia({audio:true})
+    } catch (err) {
+      console.error("Error: " + err);
+    }
+    return [captureStream,audioStream];
+  }
+
+  async function start() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+      console.log('getUserMedia is not supported')
+    } else {
+      const displayMediaOptions = {
+        video: true,
+        audio: false,
+      }
+
+      let captureStream = await startCapture(displayMediaOptions)
+      console.log(captureStream);
+      await getMediaStream(captureStream)
+      document.querySelector(".pre-start-view").style.display = "none"
+      document.querySelector(".living-view").style.display = "block"
+    }
+
+  }
+
+  function handleDataAvailable(e) {
+    if (e && e.data && e.data.size > 0) {
+      videoBuffer.push(e.data)
+    }
+  }
+
+  async function record(even) {
+    let $target = even.target
+    if (recording) {
+      stopRecord()
+      $target.innerText = 'Record'
+    } else {
+      startRecord()
+      $target.innerText = 'Stop'
+    }
+  }
+
+  function startRecord() {
+    videoBuffer = []
+    const options = {
+      mimeType: 'video/webm; codecs = vp8',
+    }
+
+    if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+      console.error('${options.mimeType} is not supported!')
+      return
+    }
+
+    try {
+      mediaRecorder = new MediaRecorder(window.$stream, options)
+    } catch (e) {
+      console.error('Failed to create MediaRecorder:', e)
+      return
+    }
+    mediaRecorder.ondataavailable = handleDataAvailable
+    mediaRecorder.start(10)
+    recording = true
+  }
+
+  function stopRecord() {
+    mediaRecorder.stop()
+    recording = false
+    downRecord()
+  }
+
+  // 下载录制
+  function downRecord() {
+    const blob = new Blob(videoBuffer, { type: 'video/webm' })
+    const url = window.URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    const fileName = new Date().toLocaleString()
+    a.href = url
+    a.style.display = 'none'
+    a.download = `${fileName}.webm`
+    a.click()
+  }
+
+  function init() {
+    document.querySelector("#j_start").addEventListener('click', start)
+    document.querySelector("#j_record").addEventListener("click", record)
+  }
+
+  init()
+
+</script>
+
+</html>

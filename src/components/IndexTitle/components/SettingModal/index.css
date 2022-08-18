@@ -1,0 +1,21 @@
+.ant-modal-header {
+    border-radius: 20px;
+}
+.ant-modal-content {
+    border-radius: 20px;
+}
+
+#rc_unique_0 {
+    color: RGB(16,83,189);
+    font-size: 18px;
+}
+
+.ant-modal-footer {
+    text-align: center;
+    border-top: none;
+}
+
+.ant-btn-primary {
+    background-color: RGB(16,83,189);
+    border-radius: 10px;
+}

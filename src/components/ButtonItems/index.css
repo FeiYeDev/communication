@@ -1,0 +1,49 @@
+.buttonItem {
+    width: 130px;
+    height: 42px;
+    border: 3px solid #d9d9d9;
+    border-radius: 5px;
+    padding:0;
+    margin-right: -3px;
+    font-weight: 500;
+}
+
+.buttonItem span{
+    margin-left: 10px;
+}
+
+.buttonItems {
+    background-color: #d9d9d9;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.buttonItem:hover, .buttonItem:focus{
+    border-color: #d9d9d9;
+}
+
+.buttonItem:hover, .buttonItem:active{
+    border-color: #d9d9d9;
+}
+
+.newSession {
+    border: 1px solid RGB(16,83,189);
+    border-radius: 4px;
+    width: 10%;
+    height: 70%;
+    font-size: 18px;
+    line-height: 36px;
+    color: RGB(16,83,189);
+    cursor: pointer;
+    text-align: center;
+    align-items: center;
+}
+
+.buttonTitle {
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttonBlues {
+    color: #40a9ff;
+}
