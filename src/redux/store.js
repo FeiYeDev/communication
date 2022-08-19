@@ -4,7 +4,7 @@ const init = {
     tabPan:[
         {name:'E-mails',value:'fa fa-envelope-o',rotate:'rotate(0deg)'},
         {name:'Chat',value:'fa fa-commenting-o',rotate:'rotate(0deg)'},
-        {name:'Supports',value:"fa fa-user-circle-o",rotate:'rotate(0deg)' },
+        {name:'RtcChat',value:"fa fa-user-circle-o",rotate:'rotate(0deg)' },
     ],
     showSetting:false,
 };

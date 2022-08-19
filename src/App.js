@@ -4,6 +4,7 @@ import ButtonItem from './components/ButtonItems';
 import IndexTitle from './components/IndexTitle';
 import Chat from './components/Chat';
 import Email from './components/Emails';
+import RtcChat from './components/RtcChat';
 
 function App() {
 
@@ -12,8 +13,9 @@ function App() {
       <IndexTitle />
       <ButtonItem />
       <div className="inner">
-        <Chat />
         <Email />
+        <Chat />
+        <RtcChat />
       </div>
     </div>
   );

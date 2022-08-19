@@ -81,9 +81,10 @@ class VideoDemo extends React.Component {
         this.init('getUserMedia')
     }
 
-    // record bind callBack
+    // 给record绑定事件的回调
     bindEvents() {
         this.recorder.ondataavailable = (e) => {
+            console.log(e.data);
             this.setState({
                 chunk: e.data
             })
